@@ -18,11 +18,13 @@ import co.com.ingeneo.api.controller.response.UsuarioModel;
 import co.com.ingeneo.api.service.AuthenticationService;
 import co.com.ingeneo.api.service.SecUsuarioService;
 import io.micrometer.common.lang.NonNull;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/v1/auth")
+@Tag(name = "Controlador Autenticador", description = "EndPoint's encargados del registro y autenticacion de los usuarios de la API" )
 @RequiredArgsConstructor
 public class AuthenticationController {
 	

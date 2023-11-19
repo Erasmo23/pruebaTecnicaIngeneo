@@ -29,6 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
+	private static final String[] AUTH_API_DOC_WHITELIST = { "/v3/api-docs/**", "/v3/api-docs.yaml",
+			"/swagger-ui/**", "/swagger-ui.html" };
+
 	private final JWTAuthorizationFilter jWTAuthorizationFilter;
 
 	private final JpaUserDetailsService jpaUserDetailsService;
@@ -52,8 +55,11 @@ public class SpringSecurityConfig {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		http.cors().and().authorizeHttpRequests().requestMatchers("/api/v1/auth/**").permitAll().anyRequest()
-				.authenticated().and().authenticationProvider(authenticationProvider())
+		http.cors().and().authorizeHttpRequests()
+				.requestMatchers("/api/v1/auth/**").permitAll()
+				.requestMatchers(AUTH_API_DOC_WHITELIST).permitAll()
+				.anyRequest().authenticated().and()
+				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(jWTAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
 				.userDetailsService(jpaUserDetailsService).csrf().disable().exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()

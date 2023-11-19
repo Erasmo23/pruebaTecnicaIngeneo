@@ -17,12 +17,15 @@ import co.com.ingeneo.api.controller.request.UsuarioRolRequest;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
 import co.com.ingeneo.api.service.SecUsuarioService;
 import io.micrometer.common.lang.NonNull;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/usuarios")
+@Tag(name = "Controlador Usuarios", 
+		description = "EndPoint's de control de autorización de acceso a las funcionalidades o demas EndPoint de Controladores; Solo rol de Admin puede acceder" )
 public class UsuarioController {
 
 	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_ADMIN;
