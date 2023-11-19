@@ -8,10 +8,8 @@ import org.springframework.data.jpa.domain.Specification;
 import co.com.ingeneo.api.repository.domain.HasIdGetter;
 
 /**
- * To support multiple filtering it creates a list of criteria specification.
- *
- * @param <T>
- *     an entity
+ * Para admitir filtrado múltiple, crea una lista de especificación de criterios.
+ * @param <T> Una Entity
  */
 public class GenericSpecBuilder <T extends HasIdGetter<Long>> {
 

@@ -1,6 +1,5 @@
 package co.com.ingeneo.api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -16,61 +15,59 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.com.ingeneo.api.controller.request.ClienteRequest;
-import co.com.ingeneo.api.controller.response.ClienteModel;
+import co.com.ingeneo.api.controller.request.DestinoEntregaRequest;
+import co.com.ingeneo.api.controller.response.DestinoEntregaModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
-import co.com.ingeneo.api.service.ClienteService;
+import co.com.ingeneo.api.service.DestinoEntregaService;
 import jakarta.validation.Valid;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/clientes")
-public class ClienteController {
+@RequestMapping("/api/v1/destinosEntregas")
+public class DestinoEntregaController {
 
-	private final @NonNull ClienteService clienteService;
 	
-	@Autowired
-	public ClienteController(ClienteService clienteService) {
-		this.clienteService = clienteService;
-	}
+	private final @NonNull DestinoEntregaService destinoEntregaService;
 	
-	@GetMapping({"/",""})
+	@GetMapping({"","/"})
 	@ResponseStatus(HttpStatus.OK)
-	public PagedModel<ClienteModel> filtered(@RequestParam(value = "page") final Integer page,
+	public PagedModel<DestinoEntregaModel> getAll(@RequestParam(value = "page") final Integer page,
 			@RequestParam(value = "size") final Integer size,
 			@RequestParam(value = "filter",required = false) final String filter,
 			@RequestParam(value = "sort",required = false) final String sort){
-		return clienteService.getAllClienteFiltered(page, size, filter, sort);
+		return destinoEntregaService.getAll(page,size,filter,sort);
 	}
 	
-	@GetMapping("/{clienteId}")
+	@GetMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ClienteModel getOne(@PathVariable final Long clienteId){
-		return clienteService.getClienteById(clienteId) ;
+	public DestinoEntregaModel getOne(@PathVariable Long destinoEntregaId){
+		return destinoEntregaService.getDestinoEntregaById(destinoEntregaId) ;
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-    public ClienteModel saveEntity(@RequestBody @Valid final ClienteRequest clienteRequest) {
-        return clienteService.save(clienteRequest);
+    public DestinoEntregaModel saveEntity(@RequestBody @Valid DestinoEntregaRequest destinoEntregaRequest) {
+        return destinoEntregaService.save(destinoEntregaRequest);
     }
 	
-	@PutMapping("/{clienteId}")
+	@PutMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ClienteModel update(@PathVariable Long clienteId,@RequestBody @Validated final ClienteRequest clienteRequest){
-		return clienteService.update(clienteId, clienteRequest);
+	public DestinoEntregaModel update(@PathVariable Long destinoEntregaId,@RequestBody @Validated DestinoEntregaRequest destinoEntregaRequest){
+		return destinoEntregaService.update(destinoEntregaId, destinoEntregaRequest);
 	}
 	
-	@DeleteMapping("/{clienteId}")
+	@DeleteMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable final Long clienteId){
-		clienteService.deleteById(clienteId);
+	public void delete(@PathVariable Long destinoEntregaId){
+		destinoEntregaService.deleteById(destinoEntregaId);
 	}
 	
 	@GetMapping("/select")
 	@ResponseStatus(HttpStatus.OK)
 	public CollectionModel<SelectOptionGeneric> selectOptionGeneric(){
-		return clienteService.selectCliente(getClass());
+		return destinoEntregaService.selectDestinoEntrega(getClass());
 	}
 	
 }

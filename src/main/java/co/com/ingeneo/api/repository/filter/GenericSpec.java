@@ -18,18 +18,15 @@ import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 
 /**
- * Creates the criteria specification.
- *
- * @param <T>
- *     an entity
- * @param <I>
- *     the id type of the entity
+ * Clase encargada de crear la Specification de la entidad.
+ * @param <T> Una Entidad
+ * @param <I> the id type of the entity
  */
 public class GenericSpec<T extends HasIdGetter<I>, I extends Serializable> implements Specification<T> {
 
 	private static final long serialVersionUID = 7168029442902828393L;
 
-	public static final String PATTERN = "(\\w+?)(:|<|>|-in-|-bw-)([A-Za-z0-9_:.\\s\\+-]+?),";
+	public static final String PATTERN = "(\\w+?)(:|<|>|-in-|-bw-)([A-Za-z0-9_:.\\s\\+/]+?),";
     
     public static final Integer MATCHER_GROUP_KEY = 1;
     

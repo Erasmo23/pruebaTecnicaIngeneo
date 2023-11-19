@@ -8,7 +8,7 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.com.ingeneo.api.config.CommonConfigurationUtils;
+import co.com.ingeneo.api.config.PageableUtils;
 import co.com.ingeneo.api.config.exception.CustomValidationException;
 import co.com.ingeneo.api.config.exception.RecursoNoEncontrado;
 import co.com.ingeneo.api.controller.request.ClienteRequest;
@@ -41,9 +41,9 @@ public class ClienteServiceImpl extends GenericSpecificationGenerator<Cliente> i
 	@Transactional(readOnly = true)
 	@Override
 	public PagedModel<ClienteModel> getAllClienteFiltered(final Integer page, final Integer size, final String filter, final String sort) {
-		Sort sortBy = CommonConfigurationUtils.generateSort(sort, this::replaceAlias);
+		Sort sortBy = PageableUtils.generateSort(sort, this::replaceAlias);
 
-		Pageable pageable = CommonConfigurationUtils.generatePageable(page, size, sortBy);
+		Pageable pageable = PageableUtils.generatePageable(page, size, sortBy);
 
 		return pagedResourcesAssembler.toModel(clienteRepository.findAll(generateSpecification(filter), pageable), clienteAssembler);
 	}
@@ -77,7 +77,7 @@ public class ClienteServiceImpl extends GenericSpecificationGenerator<Cliente> i
 	}
 
 	@Override
-	public void update(final Long clienteId, final ClienteRequest clienteRequest) {
+	public ClienteModel update(final Long clienteId, final ClienteRequest clienteRequest) {
 		fechClienteById(clienteId);
 
 		Cliente clienteUpdate = clienteAssembler.getClienteMapper().toCliente(clienteRequest);
@@ -85,6 +85,8 @@ public class ClienteServiceImpl extends GenericSpecificationGenerator<Cliente> i
 		clienteUpdate.setId(clienteId);
 
 		clienteRepository.save(clienteUpdate);
+		
+		return clienteAssembler.toModel(clienteUpdate);
 
 	}
 
