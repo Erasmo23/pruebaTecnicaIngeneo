@@ -15,7 +15,7 @@ public interface ClienteService {
 	
 	ClienteModel save(final ClienteRequest clienteRequest);
 	
-	void update(final Long clienteId,final ClienteRequest clienteRequest);
+	ClienteModel update(final Long clienteId,final ClienteRequest clienteRequest);
 	
 	void deleteById(final Long id);
 
