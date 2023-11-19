@@ -3,6 +3,7 @@ package co.com.ingeneo.api.controller;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.ingeneo.api.config.SecurityUtils;
 import co.com.ingeneo.api.controller.request.DestinoEntregaRequest;
 import co.com.ingeneo.api.controller.response.DestinoEntregaModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
@@ -28,9 +30,11 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/destinosEntregas")
 public class DestinoEntregaController {
 
+	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_REGISTER;
 	
 	private final @NonNull DestinoEntregaService destinoEntregaService;
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping({"","/"})
 	@ResponseStatus(HttpStatus.OK)
 	public PagedModel<DestinoEntregaModel> getAll(@RequestParam(value = "page") final Integer page,
@@ -40,24 +44,28 @@ public class DestinoEntregaController {
 		return destinoEntregaService.getAll(page,size,filter,sort);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
 	public DestinoEntregaModel getOne(@PathVariable Long destinoEntregaId){
 		return destinoEntregaService.getDestinoEntregaById(destinoEntregaId) ;
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
     public DestinoEntregaModel saveEntity(@RequestBody @Valid DestinoEntregaRequest destinoEntregaRequest) {
         return destinoEntregaService.save(destinoEntregaRequest);
     }
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PutMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
 	public DestinoEntregaModel update(@PathVariable Long destinoEntregaId,@RequestBody @Validated DestinoEntregaRequest destinoEntregaRequest){
 		return destinoEntregaService.update(destinoEntregaId, destinoEntregaRequest);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@DeleteMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long destinoEntregaId){

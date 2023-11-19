@@ -24,6 +24,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.util.WebUtils;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -81,6 +82,12 @@ public class RestControllerExceptionHandler extends ResponseEntityExceptionHandl
 	@ExceptionHandler(AccessDeniedException.class)
 	@ResponseStatus(HttpStatus.UNAUTHORIZED)
 	public ApiErrorResponseWrapper handleAccessDeniedException(AccessDeniedException ex, WebRequest request){
+		return message(HttpStatus.UNAUTHORIZED, ex);
+	}
+	
+	@ExceptionHandler(ExpiredJwtException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	public ApiErrorResponseWrapper handleExpiredJwtException(ExpiredJwtException ex, WebRequest request){
 		return message(HttpStatus.UNAUTHORIZED, ex);
 	}
 	

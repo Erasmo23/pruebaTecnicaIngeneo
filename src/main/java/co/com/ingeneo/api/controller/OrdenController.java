@@ -2,6 +2,7 @@ package co.com.ingeneo.api.controller;
 
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.ingeneo.api.config.SecurityUtils;
 import co.com.ingeneo.api.controller.request.OrdenMaritimaRequest;
 import co.com.ingeneo.api.controller.request.OrdenTerrestreRequest;
 import co.com.ingeneo.api.controller.response.OrdenModel;
@@ -28,8 +30,11 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/ordenes")
 public class OrdenController {
 	
+	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_ORDER;
+	
 	private final @NonNull OrdenService ordenService;
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping({"","/"})
 	public PagedModel<OrdenModel> getAll(@RequestParam(value = "page") final Integer page,
 			@RequestParam(value = "size") final Integer size,
@@ -38,6 +43,7 @@ public class OrdenController {
 		return ordenService.getAllOrdenesFiltered(page,size,filter,sort);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping("/{ordenId}")
 	public OrdenModel getOne(@PathVariable Long ordenId){
 		return ordenService.getOrdenById(ordenId) ;
@@ -48,40 +54,47 @@ public class OrdenController {
 		return ordenService.getOrdenByNumGuia(numeroGuia) ;
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PostMapping("/saveOrdenTerrestre")
 	@ResponseStatus(HttpStatus.CREATED)
     public OrdenModel saveEntity(@RequestBody @Valid OrdenTerrestreRequest ordenTerrestreRequest) {
         return ordenService.saveOrdenTerrestre(ordenTerrestreRequest);
     }
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PostMapping("/saveOrdenMaritima")
 	@ResponseStatus(HttpStatus.CREATED)
     public OrdenModel saveEntity(@RequestBody @Valid OrdenMaritimaRequest ordenMaritimaRequest) {
         return ordenService.saveOrdenMaritima(ordenMaritimaRequest);
     }
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PutMapping("/updateOrdenTerrestre/{ordenId}")
 	public OrdenModel updateTerrestre(@PathVariable Long ordenId,@RequestBody @Validated OrdenTerrestreRequest ordenTerrestreRequest){
 		return ordenService.updateOrdenTerrestre(ordenId, ordenTerrestreRequest);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PutMapping("/updateOrdenMaritima/{ordenId}")
 	public OrdenModel updateMaritima(@PathVariable Long ordenId,@RequestBody @Validated OrdenMaritimaRequest ordenMaritimaRequest){
 		return ordenService.updateOrdenMaritima(ordenId, ordenMaritimaRequest);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@DeleteMapping("/{ordenId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long ordenId){
 		ordenService.deleteById(ordenId);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PatchMapping("/{ordenId}/ordenEnviada")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ordenEnviada(@PathVariable Long ordenId){
 		ordenService.ordenEnviada(ordenId);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PatchMapping("/{ordenId}/ordenFinalizada/")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void ordenFinalizada(@PathVariable Long ordenId){
