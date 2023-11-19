@@ -1,0 +1,23 @@
+package co.com.ingeneo.api.controller.request;
+
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Builder(toBuilder = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsuarioRolRequest {
+
+	@NotNull(message = "El campo de usuarioId no puede ser nulo")
+	private Long usuarioId;
+	
+	@NotNull(message = "El campo de rolId no puede ser nulo")
+	private Long rolId;
+	
+}

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.com.ingeneo.api.config.SecurityUtils;
 import co.com.ingeneo.api.controller.request.ClienteRequest;
 import co.com.ingeneo.api.controller.response.ClienteModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
@@ -27,6 +29,8 @@ import lombok.NonNull;
 @RequestMapping("/api/v1/clientes")
 public class ClienteController {
 
+	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_REGISTER;
+	
 	private final @NonNull ClienteService clienteService;
 	
 	@Autowired
@@ -34,6 +38,7 @@ public class ClienteController {
 		this.clienteService = clienteService;
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping({"/",""})
 	@ResponseStatus(HttpStatus.OK)
 	public PagedModel<ClienteModel> filtered(@RequestParam(value = "page") final Integer page,
@@ -43,24 +48,28 @@ public class ClienteController {
 		return clienteService.getAllClienteFiltered(page, size, filter, sort);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@GetMapping("/{clienteId}")
 	@ResponseStatus(HttpStatus.OK)
 	public ClienteModel getOne(@PathVariable final Long clienteId){
 		return clienteService.getClienteById(clienteId) ;
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
     public ClienteModel saveEntity(@RequestBody @Valid final ClienteRequest clienteRequest) {
         return clienteService.save(clienteRequest);
     }
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@PutMapping("/{clienteId}")
 	@ResponseStatus(HttpStatus.OK)
 	public ClienteModel update(@PathVariable Long clienteId,@RequestBody @Validated final ClienteRequest clienteRequest){
 		return clienteService.update(clienteId, clienteRequest);
 	}
 	
+	@PreAuthorize(HAS_AUTHORITY)
 	@DeleteMapping("/{clienteId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable final Long clienteId){
