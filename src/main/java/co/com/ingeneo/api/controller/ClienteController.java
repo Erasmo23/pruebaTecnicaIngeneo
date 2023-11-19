@@ -22,11 +22,14 @@ import co.com.ingeneo.api.controller.request.ClienteRequest;
 import co.com.ingeneo.api.controller.response.ClienteModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
 import co.com.ingeneo.api.service.ClienteService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
+@Tag(name = "Controlador Clientes", 
+	description = "EndPoint's para realizar el CRUD de los clientes del sistema" )
 public class ClienteController {
 
 	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_REGISTER;

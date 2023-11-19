@@ -21,6 +21,7 @@ import co.com.ingeneo.api.controller.request.DestinoEntregaRequest;
 import co.com.ingeneo.api.controller.response.DestinoEntregaModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
 import co.com.ingeneo.api.service.DestinoEntregaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/destinosEntregas")
+@Tag(name = "Controlador Destinos Entregas", 
+		description = "EndPoint's para realizar el CRUD de los distintas Bodegas de Almacenamientos y Puertos Maritimos que se manejan en el sistema" )
 public class DestinoEntregaController {
 
 	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_REGISTER;

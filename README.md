@@ -46,3 +46,12 @@ La seguridad de la API esta por medio de JWT version 0.11.5 por lo cual las cons
 - Dependiendo del Rol del usuario del sistema asi mismo se habilita los recursos que este puede acceder por medio de Enables **Spring Security Method Security**.
 
 ------------
+
+### Documentacion Rest API
+
+En este apartado se ha habilitado en el Spring Security las urls donde actua swagger-ui con la integracion de seguridad de JWT incluida teniendo en cuenta que las contexto de acceso son los siguientes:
+- https:/.../swagger-ui/index.html : Para ver la interfaz grafica por medio de swagger.
+- https:/.../v3/api-docs : Para ver en formato json toda la documentacion de la API
+- https:/.../v3/api-docs.yaml : Igualmente que la anterior pero en formato yaml
+
+------------

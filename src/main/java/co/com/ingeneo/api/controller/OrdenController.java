@@ -21,6 +21,7 @@ import co.com.ingeneo.api.controller.request.OrdenMaritimaRequest;
 import co.com.ingeneo.api.controller.request.OrdenTerrestreRequest;
 import co.com.ingeneo.api.controller.response.OrdenModel;
 import co.com.ingeneo.api.service.OrdenService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/ordenes")
+@Tag(name = "Controlador Ordenes", 
+		description = "EndPoint's para realizar el CRUD de las Ordenes del sistema" )
 public class OrdenController {
 	
 	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_ORDER;
