@@ -1,11 +1,12 @@
 package co.com.ingeneo.api.config.security.service;
 
 import java.io.IOException;
-import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.function.Function;
+
+import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,19 +21,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JWTServiceImpl implements JWTService {
 
-	@Value("${token.signing.key}")
-	private String jwtSigningKey;
+	// Se comentare debido que en prod se realiza 
+	// la obtencion de la llama de manera mas segura con los algoritmo proporcionado del JWT
+	//@Value("${token.signing.key}")
+	//private String jwtSigningKey;
 
 	@Value("${token.signing.jwtExpirationInMs}")
 	private Long jwtExpirationInMs;
 	
-	//private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+	private static final SecretKey SECRET_KEY = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 	
 	private final ObjectMapper objectMapper;
 
@@ -57,8 +60,8 @@ public class JWTServiceImpl implements JWTService {
 		String token = Jwts.builder().setClaims(claims).setSubject(username)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-				//.signWith(SECRET_KEY)
-				.signWith(getSigningKey())
+				.signWith(SECRET_KEY)
+				//.signWith(getSigningKey())
 				.compact();
 
 		return token;
@@ -81,8 +84,8 @@ public class JWTServiceImpl implements JWTService {
 	@Override
 	public Claims extractAllClaims(String token) {
 		return Jwts.parserBuilder()
-				.setSigningKey(getSigningKey())
-				//.setSigningKey(SECRET_KEY)
+				//.setSigningKey(getSigningKey())
+				.setSigningKey(SECRET_KEY)
 				.build().parseClaimsJws(token).getBody();
 	}
 
@@ -115,9 +118,9 @@ public class JWTServiceImpl implements JWTService {
 		return claimsResolvers.apply(claims);
 	}
 
-	private Key getSigningKey() {
+	/*private Key getSigningKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(jwtSigningKey);
 		return Keys.hmacShaKeyFor(keyBytes);
-	}
+	}*/
 
 }
