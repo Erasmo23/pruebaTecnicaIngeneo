@@ -2,12 +2,12 @@ package co.com.ingeneo.api.config;
 
 import java.security.SecureRandom;
 
-public abstract class CommonConfigurationUtils {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-	public CommonConfigurationUtils() {
-		throw new IllegalStateException("Constants class must not be instantiated!");
-	}
-	
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class CommonConfigurationUtils {
+
 	public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
     public static final String DATE_TIME_FORMAT_AM_PM = "dd/MM/yyyy hh:mm:ss a";
@@ -20,7 +20,7 @@ public abstract class CommonConfigurationUtils {
      * @param longitud Cantidad de caracteres que seran generados aleatorios
      * @return String que contiene cierta cantidad de caracteres alfanumericos
      */
-    public static String generarStringAlfanumericoAleatorio(int longitud) {
+    public static String generarStringAlfanumericoAleatorio(final int longitud) {
         StringBuilder builder = new StringBuilder(longitud);
         SecureRandom random = new SecureRandom();
 

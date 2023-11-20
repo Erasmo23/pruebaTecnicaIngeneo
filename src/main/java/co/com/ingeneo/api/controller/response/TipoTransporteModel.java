@@ -20,7 +20,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class TipoTransporteModel extends RepresentationModel<TipoTransporteModel> {
 
-	private Integer tipoTransporteId;
+	private Long tipoTransporteId;
 	
 	private String codigo; 
 

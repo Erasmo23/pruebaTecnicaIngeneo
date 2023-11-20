@@ -7,12 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
-public abstract class PageableUtils {
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
-	public PageableUtils() {
-		throw new IllegalStateException("Util Class must not be instantiated!");
-	}
-	
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class PageableUtils {
+
 	public static final Sort generateSort(final String orderByExpresion,final Function<String, String> funcion) {
 		Sort sort = null;
 

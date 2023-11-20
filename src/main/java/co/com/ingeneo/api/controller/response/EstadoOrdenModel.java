@@ -20,7 +20,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class EstadoOrdenModel extends RepresentationModel<EstadoOrdenModel> {
 
-	private Integer estadoOrdenId;
+	private Long estadoOrdenId;
 	
 	private String codigo; 
 

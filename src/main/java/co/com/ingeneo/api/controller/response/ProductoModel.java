@@ -21,7 +21,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class ProductoModel extends RepresentationModel<ProductoModel> {
 
-	private Integer productoId;
+	private Long productoId;
 	
 	private String nombre; 
 	

@@ -21,7 +21,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class UsuarioModel extends RepresentationModel<UsuarioModel> {
 
-	private Integer usuarioId;
+	private Long usuarioId;
 	
 	private String nombres; 
 

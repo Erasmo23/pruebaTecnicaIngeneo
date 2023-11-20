@@ -20,7 +20,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class PaisModel extends RepresentationModel<PaisModel> {
 
-	private Integer paisId;
+	private Long paisId;
 	
 	private String nombre;
 	

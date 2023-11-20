@@ -21,7 +21,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class DestinoEntregaModel extends RepresentationModel<DestinoEntregaModel>{
 
-	private Integer destinoEntregaId;
+	private Long destinoEntregaId;
 	
 	private String nombre;
 	
