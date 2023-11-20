@@ -27,7 +27,7 @@ import lombok.experimental.FieldNameConstants;
 @Relation(collectionRelation = "data")
 public class OrdenModel extends RepresentationModel<OrdenModel> {
 	
-	private Integer ordenId;
+	private Long ordenId;
 
 	private ClienteModel cliente;
 	

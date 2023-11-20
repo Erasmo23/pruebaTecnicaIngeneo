@@ -55,3 +55,6 @@ En este apartado se ha habilitado en el Spring Security las urls donde actua swa
 - https:/.../v3/api-docs.yaml : Igualmente que la anterior pero en formato yaml
 
 ------------
+
+### Testing
+Se configuro una base en memoria H2 para realizar las pruebas de integracion de Spring con JUnit 5.
