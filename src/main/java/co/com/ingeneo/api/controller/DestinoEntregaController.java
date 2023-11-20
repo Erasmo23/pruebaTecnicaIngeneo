@@ -1,6 +1,5 @@
 package co.com.ingeneo.api.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -18,71 +17,68 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.ingeneo.api.config.SecurityUtils;
-import co.com.ingeneo.api.controller.request.ClienteRequest;
-import co.com.ingeneo.api.controller.response.ClienteModel;
+import co.com.ingeneo.api.controller.request.DestinoEntregaRequest;
+import co.com.ingeneo.api.controller.response.DestinoEntregaModel;
 import co.com.ingeneo.api.controller.response.SelectOptionGeneric;
-import co.com.ingeneo.api.service.ClienteService;
+import co.com.ingeneo.api.service.DestinoEntregaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/clientes")
-@Tag(name = "Controlador Clientes", 
-	description = "EndPoint's para realizar el CRUD de los clientes del sistema" )
-public class ClienteController {
+@RequestMapping("/api/v1/destinosEntregas")
+@Tag(name = "Controlador Destinos Entregas", 
+		description = "EndPoint's para realizar el CRUD de los distintas Bodegas de Almacenamientos y Puertos Maritimos que se manejan en el sistema" )
+public class DestinoEntregaController {
 
 	private static final String HAS_AUTHORITY =  SecurityUtils.HAS_AUTHORITY_REGISTER;
 	
-	private final @NonNull ClienteService clienteService;
-	
-	@Autowired
-	public ClienteController(ClienteService clienteService) {
-		this.clienteService = clienteService;
-	}
+	private final @NonNull DestinoEntregaService destinoEntregaService;
 	
 	@PreAuthorize(HAS_AUTHORITY)
-	@GetMapping({"/",""})
+	@GetMapping({"","/"})
 	@ResponseStatus(HttpStatus.OK)
-	public PagedModel<ClienteModel> filtered(@RequestParam(value = "page") final Integer page,
+	public PagedModel<DestinoEntregaModel> getAll(@RequestParam(value = "page") final Integer page,
 			@RequestParam(value = "size") final Integer size,
 			@RequestParam(value = "filter",required = false) final String filter,
 			@RequestParam(value = "sort",required = false) final String sort){
-		return clienteService.getAllClienteFiltered(page, size, filter, sort);
+		return destinoEntregaService.getAll(page,size,filter,sort);
 	}
 	
 	@PreAuthorize(HAS_AUTHORITY)
-	@GetMapping("/{clienteId}")
+	@GetMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ClienteModel getOne(@PathVariable final Long clienteId){
-		return clienteService.getClienteById(clienteId) ;
+	public DestinoEntregaModel getOne(@PathVariable Long destinoEntregaId){
+		return destinoEntregaService.getDestinoEntregaById(destinoEntregaId) ;
 	}
 	
 	@PreAuthorize(HAS_AUTHORITY)
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-    public ClienteModel saveEntity(@RequestBody @Valid final ClienteRequest clienteRequest) {
-        return clienteService.save(clienteRequest);
+    public DestinoEntregaModel saveEntity(@RequestBody @Valid DestinoEntregaRequest destinoEntregaRequest) {
+        return destinoEntregaService.save(destinoEntregaRequest);
     }
 	
 	@PreAuthorize(HAS_AUTHORITY)
-	@PutMapping("/{clienteId}")
+	@PutMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.OK)
-	public ClienteModel update(@PathVariable Long clienteId,@RequestBody @Validated final ClienteRequest clienteRequest){
-		return clienteService.update(clienteId, clienteRequest);
+	public DestinoEntregaModel update(@PathVariable Long destinoEntregaId,@RequestBody @Validated DestinoEntregaRequest destinoEntregaRequest){
+		return destinoEntregaService.update(destinoEntregaId, destinoEntregaRequest);
 	}
 	
 	@PreAuthorize(HAS_AUTHORITY)
-	@DeleteMapping("/{clienteId}")
+	@DeleteMapping("/{destinoEntregaId}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void delete(@PathVariable final Long clienteId){
-		clienteService.deleteById(clienteId);
+	public void delete(@PathVariable Long destinoEntregaId){
+		destinoEntregaService.deleteById(destinoEntregaId);
 	}
 	
 	@GetMapping("/select")
 	@ResponseStatus(HttpStatus.OK)
 	public CollectionModel<SelectOptionGeneric> selectOptionGeneric(){
-		return clienteService.selectCliente(getClass());
+		return destinoEntregaService.selectDestinoEntrega(getClass());
 	}
 	
 }
