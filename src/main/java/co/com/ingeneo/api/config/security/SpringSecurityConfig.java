@@ -71,7 +71,7 @@ public class SpringSecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		configuration.setAllowedOrigins(Arrays.asList("*"));
-		configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "PATCH", "GET", "DELETE"));
+		configuration.setAllowedMethods(Arrays.asList("POST", "PUT", "PATCH", "GET", "DELETE","OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("Access-Control-Allow-Headers", "Authorization", "Content-Type",
 				"Access-Control-Max-Age"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
