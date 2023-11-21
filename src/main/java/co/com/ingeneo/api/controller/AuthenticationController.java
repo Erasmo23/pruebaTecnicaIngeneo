@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import co.com.ingeneo.api.controller.request.RegistroUsuarioRequest;
 import co.com.ingeneo.api.controller.request.SignInRequest;
+import co.com.ingeneo.api.controller.request.TokenActiveRequest;
 import co.com.ingeneo.api.controller.response.JwtAuthenticationResponse;
 import co.com.ingeneo.api.controller.response.UsuarioModel;
 import co.com.ingeneo.api.service.AuthenticationService;
@@ -36,8 +36,8 @@ public class AuthenticationController {
 	
 	@PatchMapping("/active")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void active(@RequestParam("tokenActivate") String tokenActivate) {
-		secUsuarioService.active(tokenActivate);
+	public void active(@RequestBody TokenActiveRequest token) {
+		secUsuarioService.active(token.getTokenActivate());
 	}
 
 	@PostMapping("/registro")
